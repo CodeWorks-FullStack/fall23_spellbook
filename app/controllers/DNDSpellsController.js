@@ -6,6 +6,7 @@ import { setHTML } from "../utils/Writer.js";
 function _drawDNDSpells() {
   const spells = AppState.dndSpells
   let content = ''
+  // NOTE these spells are POJOs, so they don't have any methods on them to generate HTML. I just build that string of HTML here in my controller
   spells.forEach(spell => content += `
   <div class="text-center mb-2">
     <button onclick="app.DNDSpellsController.getSpellByIndex('${spell.index}')" class="btn btn-info w-100">${spell.name}</button>

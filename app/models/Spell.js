@@ -2,18 +2,22 @@ export class Spell {
   constructor (data) {
     this.id = data.id || null
     this.name = data.name
+
+    // NOTE join is useful taking an array of strings and joining them together into one single string, you can supply an optional argument to put in beteween each string
     this.description = data.description || data.desc.join('<br>')
+
     // NOTE this won't be on your checkpoint, this is crazy person code
     this.damage = typeof data.damage == 'string' ?
       data.damage
       :
       data.damage?.damage_at_slot_level[data.level] || 'No damage'
+
     this.level = data.level
     this.range = data.range
     this.material = data.material || 'None'
     this.ritual = data.ritual
     this.concentration = data.concentration
-    this.castingTime = data.casting_time
+    this.castingTime = data.casting_time || data.castingTime
     this.duration = data.duration
     this.components = data.components
     this.prepared = data.prepared || false
@@ -50,6 +54,8 @@ export class Spell {
   }
 
   get MySpellListTemplate() {
+    // NOTE onchange will run code every time the value of the checkbox input changes
+    // NOTE there is a ternary on the checkbox input to conditionally add the checked attribute if the spell's prepared boolean is true
     return `
     <div class="text-center mb-2">
       <input ${this.prepared ? 'checked' : ''} onchange="app.SandboxSpellsController.prepareSpell('${this.id}')" type="checkbox">

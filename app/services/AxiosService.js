@@ -1,6 +1,7 @@
 import { baseURL } from '../env.js';
 import { logger } from '../utils/Logger.js';
 
+// NOTE This axios instance uses the baseURL from our env.js. I will generally not change the name of this because our template uses this instance in other places
 // @ts-ignore
 // eslint-disable-next-line no-undef
 export const api = axios.create({
@@ -9,6 +10,7 @@ export const api = axios.create({
   withCredentials: true
 })
 
+// NOTE second axios instance so we can call to a different API
 // @ts-ignore
 export const dndApi = axios.create({
   baseURL: 'https://www.dnd5eapi.co',

@@ -13,6 +13,7 @@ class DNDSpellsService {
   async getDNDSpells() {
     const res = await dndApi.get('api/spells')
     console.log('GOT SPELLS', res.data);
+    // NOTE storing these as POJOs since they are very simple objects without much information on them
     AppState.dndSpells = res.data.results
   }
 

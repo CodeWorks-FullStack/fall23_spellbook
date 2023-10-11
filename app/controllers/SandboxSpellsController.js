@@ -10,7 +10,6 @@ function _drawMySpells() {
   setHTML('mySpellOffcanvas', content)
 
   const preparedSpells = spells.filter(spell => spell.prepared)
-
   setHTML('spellCount', preparedSpells.length)
 }
 
@@ -18,8 +17,10 @@ function _drawMySpells() {
 export class SandboxSpellsController {
   constructor () {
     console.log('LOADED');
-    // this.getMySpells()
 
+    // NOTE we can't do this, since we have to be logged in to make this request
+    // this.getMySpells()
+    // NOTE waits for the account object to be set in the appstate from the sandbox api, then makes the request with our bearer token attached
     AppState.on('account', this.getMySpells)
     AppState.on('mySpells', _drawMySpells)
   }
@@ -48,10 +49,10 @@ export class SandboxSpellsController {
     } catch (error) {
       console.error(error);
       Pop.error(error)
-
     }
   }
 
+  // NOTE we don't have to talk to API for this request, so this is not asynchronous
   setActiveSpell(spellId) {
     sandboxSpellsService.setActiveSpell(spellId)
     // @ts-ignore
