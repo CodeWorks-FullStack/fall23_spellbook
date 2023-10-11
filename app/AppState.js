@@ -22,6 +22,9 @@ class ObservableAppState extends EventEmitter {
   /** @type {Spell | null} */
   activeSpell = null
 
+  /** @type {Spell[]} */
+  mySpells = []
+
   // Used to load initial data
   init() {
 

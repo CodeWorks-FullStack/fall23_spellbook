@@ -1,8 +1,13 @@
 export class Spell {
   constructor (data) {
+    this.id = data.id || null
     this.name = data.name
-    this.description = data.desc.join('<br>')
-    this.damage = data.damage?.damage_at_slot_level[data.level] || 'No damage'
+    this.description = data.description || data.desc.join('<br>')
+    // NOTE this won't be on your checkpoint, this is crazy person code
+    this.damage = typeof data.damage == 'string' ?
+      data.damage
+      :
+      data.damage?.damage_at_slot_level[data.level] || 'No damage'
     this.level = data.level
     this.range = data.range
     this.material = data.material || 'None'
@@ -11,8 +16,7 @@ export class Spell {
     this.castingTime = data.casting_time
     this.duration = data.duration
     this.components = data.components
-    // TODO explain this when we get to it
-    // this.prepared = data.prepared || false
+    this.prepared = data.prepared || false
   }
 
   get ActiveTemplate() {
@@ -21,8 +25,8 @@ export class Spell {
       <h1>${this.name}</h1>
       <h2>${this.level} ${this.damage}</h2>
       <h3>
-        <i class="mdi mdi-candelabra"></i>
-        <i class="mdi mdi-brain"></i>
+       ${this.ComputeRitualIcon}
+        ${this.ComputeConcentrationIcon}
         ${this.castingTime} ${this.duration}
       </h3>
       <p>
@@ -31,6 +35,25 @@ export class Spell {
       Components: ${this.components.join(', ')}
       </p>
       <p>${this.description}</p>
+      <div>
+        <button onclick="app.SandboxSpellsController.createSpell()" class="btn btn-success">Save Spell 📔</button>
+      </div>
+    </div>
+    `
+  }
+
+  get ComputeConcentrationIcon() {
+    return this.concentration ? '<i class="mdi mdi-brain"></i>' : ''
+  }
+  get ComputeRitualIcon() {
+    return this.ritual ? '<i class="mdi mdi-candelabra"></i>' : ''
+  }
+
+  get MySpellListTemplate() {
+    return `
+    <div class="text-center mb-2">
+      <input ${this.prepared ? 'checked' : ''} onchange="app.SandboxSpellsController.prepareSpell('${this.id}')" type="checkbox">
+      <button onclick="app.SandboxSpellsController.setActiveSpell('${this.id}')" class="btn btn-info w-75">${this.name}</button>
     </div>
     `
   }

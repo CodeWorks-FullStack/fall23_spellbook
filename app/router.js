@@ -1,6 +1,7 @@
 import { AboutController } from "./controllers/AboutController.js";
 import { DNDSpellsController } from "./controllers/DNDSpellsController.js";
 import { HomeController } from "./controllers/HomeController.js";
+import { SandboxSpellsController } from "./controllers/SandboxSpellsController.js";
 import { ValuesController } from "./controllers/ValuesController.js";
 import { AboutView } from "./views/AboutView.js";
 
@@ -11,7 +12,7 @@ import { AboutView } from "./views/AboutView.js";
 export const router = [
   {
     path: '',
-    controller: DNDSpellsController,
+    controller: [DNDSpellsController, SandboxSpellsController],
     view: null
   },
   {
