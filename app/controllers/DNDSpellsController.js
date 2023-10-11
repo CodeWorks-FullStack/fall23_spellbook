@@ -8,11 +8,15 @@ function _drawDNDSpells() {
   let content = ''
   spells.forEach(spell => content += `
   <div class="text-center mb-2">
-    <button class="btn btn-info w-100">${spell.name}</button>
+    <button onclick="app.DNDSpellsController.getSpellByIndex('${spell.index}')" class="btn btn-info w-100">${spell.name}</button>
   </div>
   `)
 
   setHTML('dndSpells', content)
+}
+
+function _drawActiveSpell() {
+  setHTML('activeSpell', AppState.activeSpell.ActiveTemplate)
 }
 
 
@@ -22,6 +26,7 @@ export class DNDSpellsController {
     this.getDNDSpells()
 
     AppState.on('dndSpells', _drawDNDSpells)
+    AppState.on('activeSpell', _drawActiveSpell)
   }
   async getDNDSpells() {
     try {
@@ -32,5 +37,13 @@ export class DNDSpellsController {
     }
   }
 
+  async getSpellByIndex(spellIndex) {
+    try {
+      await dndSpellsService.getSpellByIndex(spellIndex)
+    } catch (error) {
+      Pop.error(error)
+      console.error(error);
+    }
+  }
 
 }
