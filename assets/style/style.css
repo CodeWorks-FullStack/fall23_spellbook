@@ -1,0 +1,5 @@
+/* BASIC STYLES HERE */
+#dndSpells{
+  max-height: 88.3vh;
+  overflow-y: scroll;
+}
